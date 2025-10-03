@@ -38,36 +38,45 @@ public class Deck {
     }
     
     public void head (){
+        try{
         if (!cards.isEmpty()){
+            throw new NoSuchElementException("El deck esta vacio.");
+        }
             Card card = cards.remove(0);
             System.out.println(card.toString());
             System.out.println("Quedan" + cards.size()+ "cartas en el deck");
-        }else {
-            System.out.println("El deck esta vacio.");
+        }catch (NoSuchElementException e) {
+            System.out.println("Error:"+ e.getMessage());
         }
     }
     
     public void pick(){
-        if(!cards.isEmpty()){
+        try{
+        if(cards.isEmpty()){
+            throw new NoSuchElementException("El deck esta vacio.");
+        }
             Random rand = new Random();
             int index = rand.nextInt(cards.size());
             Card card = cards.remove(index);
             System.out.println(card.toString());
             System.out.println("Quedan" + cards.size()+ "cartas en el deck");
-        }else{
-            System.out.println("El deck esta vacio.");
+        }catch(NoSuchElementException e) {
+            System.out.println("Error:" + e.getMessage());
         }
     }
     
     public void hand(){
-        if (cards.size() >=5){
+        try{
+        if (cards.size() <5){
+            throw new IllegalStateException("No hay suficientes cartas para una mano.");
+        }
             for(int i=0; i<5; i++){
                 Card card = cards.remove(0);
                 System.out.println(card.toString());
             }
             System.out.println("Quedan" + cards.size()+ "cartas en el deck");
-        }else{
-            System.out.println("No hay suficientes cartas para una mano.");
+        }catch(IllegalStateException e){
+            System.out.println("Error:" + e.getMessage());
         }
     }
 }
